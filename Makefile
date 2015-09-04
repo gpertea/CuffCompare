@@ -66,20 +66,20 @@ OBJS = ${GCLDIR}/GFastaIndex.o ${GCLDIR}/GFaSeqGet.o ${GCLDIR}/gff.o \
  ${GCLDIR}/GStr.o ${GCLDIR}/GArgs.o
 
 .PHONY : all
-all:    cuffcompare test_load
+all:    cuffcompare
 #all: test_load
-debug:  cuffcompare test_load
+debug:  cuffcompare
 release: cuffcompare
 ${GCLDIR}/gff.o  : ${GCLDIR}/gff.h
 ./gtf_tracking.o : ./gtf_tracking.h
 ./cuffcompare.o : ./gtf_tracking.h
 cuffcompare: ${OBJS} ./cuffcompare.o
 	${LINKER} ${LDFLAGS} -o $@ ${filter-out %.a %.so, $^} ${LIBS}
-test_load: ${OBJS} ./test_load.o
-	${LINKER} ${LDFLAGS} -o $@ ${filter-out %.a %.so, $^} ${LIBS}
-
-testfai: ${OBJS} ./testfai.o
-	${LINKER} ${LDFLAGS} -o $@ ${filter-out %.a %.so, $^} ${LIBS}
+#test_load: ${OBJS} ./test_load.o
+#	${LINKER} ${LDFLAGS} -o $@ ${filter-out %.a %.so, $^} ${LIBS}
+#
+#testfai: ${OBJS} ./testfai.o
+#	${LINKER} ${LDFLAGS} -o $@ ${filter-out %.a %.so, $^} ${LIBS}
 # target for removing all object files
 
 .PHONY : clean

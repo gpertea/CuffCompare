@@ -313,8 +313,10 @@ int parse_mRNAs(GfList& mrnas,
 		        }
 		     }
 		   }// redundant transfrag check
+                   /*
 		   if (m->gscore==0.0)   
 		     m->gscore=m->exons[0]->score; //Cufflinks exon score = isoform abundance
+                   */
 		   //const char* expr = (gtf_tracking_largeScale) ? m->getAttr("FPKM") : m->exons[0]->getAttr(m->names,"FPKM");
 		   const char* expr = m->getAttr("FPKM");
 		   if (expr!=NULL) {
@@ -371,15 +373,6 @@ int parse_mRNAs(GfList& mrnas,
  
  //return (is_ref_set ? refdiscarded : tredundant);
 	return tredundant;
-}
-
-bool singleExonTMatch(GffObj& m, GffObj& r, int& ovlen) {
- //if (m.exons.Count()>1 || r.exons.Count()>1..)
- GSeg mseg(m.start, m.end);
- ovlen=mseg.overlapLen(r.start,r.end);
- int lmax=GMAX(r.covlen, m.covlen);
- return ((ovlen >= lmax*0.8) // fuzz matching for single-exon transcripts: 80% of the longer one
-             || (ovlen >= r.covlen*0.9)); // fuzzy reverse-containment - the reference transcript is shorter
 }
 
 bool tMatch(GffObj& a, GffObj& b, int& ovlen, bool fuzzunspl, bool contain_only) {
